@@ -1,8 +1,11 @@
 import pygame
+from pygame.sprite import Sprite
 
-class Ship():
-
+class Ship(Sprite):
+    """Реализация корабля"""
     def __init__(self, ai_settings, screen):
+        """Инициирование корабля, его вид, настроек"""
+        super(Ship, self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
 
@@ -18,7 +21,12 @@ class Ship():
         self.moving_right = False
         self.moving_left = False
         
+    def center_ship(self):
+        """Центрированое положение корабля"""
+        self.center = self.screen_rect.centerx
+        
     def update(self):
+        """Реализация движения"""
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ai_settings.ship_speed_factor
         if self.moving_left and self.rect.left > 0:
@@ -27,4 +35,5 @@ class Ship():
         self.rect.centerx = self.center
 
     def blitme(self):
+        """Отрисовка корабля."""
         self.screen.blit(self.image, self.rect)
